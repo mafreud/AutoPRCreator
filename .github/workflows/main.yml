@@ -1,4 +1,4 @@
-name: create pull request from develop branch to v2.0.7, 8, 1.0
+name: pr from develop to v2.0.7, 8, 1.0
 
 on:
   push:
