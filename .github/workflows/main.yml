@@ -1,4 +1,4 @@
-name: create branch & pull request
+name: create pull request from develop branch to v2.0.7, 8, 1.0
 
 on:
   push:
@@ -9,20 +9,20 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # hub コマンドをインストールする
-      - name: install hub
+      - name: Install hub command
         uses: geertvdc/setup-hub@v1.0.0
 
-      # dev ブランチをチェックアウトする
-      - name: checkout develop
+      - name: Checkout branch
         uses: actions/checkout@v2
         with:
           ref: develop
 
-      # プルリクを作成する
       - name: Create Pull Request
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          BRANCH_NAME: ${{ steps.create_branch.outputs.branch_name }}
         run: |
+          # 新しいdevelop-v2.x.xのブランチにも対応できるように要リファクタ
           hub pull-request -m "Promote from develop" -b develop-v2.0.7 -r "$REVIEWERS"
+          hub pull-request -m "Promote from develop" -b develop-v2.0.8 -r "$REVIEWERS"
+          hub pull-request -m "Promote from develop" -b develop-v2.1.0 -r "$REVIEWERS"
+          
