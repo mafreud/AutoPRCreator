@@ -19,23 +19,10 @@ jobs:
         with:
           ref: develop
 
-      # ブランチを作成する
-      - name: Create Branch
-        id: create_branch
-        env:
-          TZ: 'Asia/Tokyo'
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          DATE=`date +"%Y%m%d"`
-          BRANCH_NAME="promote_from_develop"
-          git checkout -b "$BRANCH_NAME"
-          git push origin "$BRANCH_NAME"
-          echo ::set-output name=branch_name::$BRANCH_NAME
-
       # プルリクを作成する
       - name: Create Pull Request
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BRANCH_NAME: ${{ steps.create_branch.outputs.branch_name }}
         run: |
-          hub pull-request -m "Promote from develop" -b develop-v2.0.7 -h $BRANCH_NAME -l "PR:draft" -r "$REVIEWERS"
+          hub pull-request -m "Promote from develop" -b develop-v2.0.7 -r "$REVIEWERS"
