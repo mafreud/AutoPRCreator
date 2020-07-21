@@ -1,0 +1,28 @@
+name: PR from develop to v2.0.7, 8, 1.0
+
+on:
+  push:
+    branches: [ develop ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Install hub command
+        uses: geertvdc/setup-hub@v1.0.0
+
+      - name: Checkout branch
+        uses: actions/checkout@v2
+        with:
+          ref: develop
+
+      - name: Create Pull Request
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # 新しいdevelop-v2.x.xのブランチにも対応できるように要リファクタ
+          hub pull-request -m "Promote from develop" -b develop-v2.0.7 -r "$REVIEWERS"
+          hub pull-request -m "Promote from develop" -b develop-v2.0.8 -r "$REVIEWERS"
+          hub pull-request -m "Promote from develop" -b develop-v2.1.0 -r "$REVIEWERS"
+          
