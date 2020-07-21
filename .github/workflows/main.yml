@@ -27,7 +27,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           DATE=`date +"%Y%m%d"`
-          BRANCH_NAME="release_$DATE"
+          BRANCH_NAME="promote_from_develop"
           git checkout -b "$BRANCH_NAME"
           git push origin "$BRANCH_NAME"
           echo ::set-output name=branch_name::$BRANCH_NAME
@@ -38,4 +38,4 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BRANCH_NAME: ${{ steps.create_branch.outputs.branch_name }}
         run: |
-          hub pull-request -m "Github Actions からプルリクを出す" -b master -h $BRANCH_NAME -l "PR:draft" -r "$REVIEWERS"
+          hub pull-request -m "Promote from develop" -b develop-v2.0.7 -h $BRANCH_NAME -l "PR:draft" -r "$REVIEWERS"
